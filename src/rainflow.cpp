@@ -103,7 +103,7 @@ RainFlow::Counts RainFlow::count_cycles( const RainFlow::Series& series, double 
 
         for( auto cycle : extract_cycles( series ) ) {
             auto n { std::ceil( cycle.range / binsize ) };            
-            if(n > nmax)
+            if( n > nmax )
                 nmax = n;
 
             auto range { n * binsize };

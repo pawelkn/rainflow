@@ -38,7 +38,7 @@ int main()
 }
 ```
 
-It is possible to obtain full information about each cycle using is an `extract_cycles` function.
+It is possible to obtain full information about each cycle using an `extract_cycles` function.
 
 It takes a single argument:
 * `RainFlow::Series series` - an input vector of samples to process

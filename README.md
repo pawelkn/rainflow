@@ -1,6 +1,8 @@
 Rainflow
 ========
 
+[![Test rainflow](https://github.com/pawelkn/rainflow/actions/workflows/test.yml/badge.svg)](https://github.com/pawelkn/rainflow/rainflow/actions/workflows/test.yml)
+
 `rainflow` is a C++ implementation of the ASTM E1049-85 rain flow cycle counting
 algorithm for fatigue analysis. It is based on Python library [rainflow](https://github.com/iamlikeme/rainflow)
 

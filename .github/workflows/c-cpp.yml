@@ -1,0 +1,26 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: googletest install
+      run: |
+        apt-get -qq update
+        apt-get install -y libgtest-dev
+        rm -rf /var/lib/apt/lists/*t
+        
+    - name: make
+      run: make
+      
+    - name: make test
+      run: make test

@@ -6,7 +6,7 @@
 int main( int argc, char *argv[] )
 {
     if( argc < 2 ) {
-        std::cout << "Usage: ./example [FILE]" << std::endl;
+        std::cout << "Usage: example_rainflow [FILE]" << std::endl;
         return 1;
     }
 

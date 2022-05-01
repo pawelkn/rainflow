@@ -14,6 +14,7 @@ Usage
 Function `RainFlow::count_cycles` returns a list of ranges and the corresponding number of cycles.
 
 It takes two arguments:
+
 * `RainFlow::Series series` - an input vector of samples to process,
 * `double binsize` - (optional) specifies the width of each cycle-counting bin
 
@@ -21,6 +22,7 @@ Returns a `RainFlow::Counts` vector of `RainFlow::Count` structs.
 `RainFlow::Count` struct has two fields: `range` and `cycles`.
 
 Example:
+
 ```cpp
 #include "rainflow.h"
 
@@ -41,12 +43,14 @@ int main()
 It is possible to obtain full information about each cycle using an `extract_cycles` function.
 
 It takes a single argument:
+
 * `RainFlow::Series series` - an input vector of samples to process
 
 Returns a `RainFlow::Cycles` vector of `RainFlow::Cycle` structs.
 `RainFlow::Cycle` struct has fields: `range`, `mean`, `count`, `start_index` and `end_index`.
 
 Example:
+
 ```cpp
 #include "rainflow.h"
 
@@ -70,13 +74,15 @@ Running example
 -----
 
 Build and run the example using `docker`:
-```
+
+```sh
 docker build -t rainflow .
 docker run --rm rainflow
 ```
 
 or locally:
-```
+
+```sh
 make
 build/example_rainflow example/samples.txt 
 ```
@@ -85,13 +91,15 @@ Running tests
 -----
 
 Build and run unit tests using `docker`:
-```
+
+```sh
 docker build -t rainflow .
 docker run --rm rainflow make test
 ```
 
 or localy:
-```
+
+```sh
 make test
 ```
 

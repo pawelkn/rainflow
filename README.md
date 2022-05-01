@@ -103,7 +103,7 @@ or localy:
 make test
 ```
 
-To run tests locally the [GoogleTest](https://github.com/google/googletest) library is requited. Under linux it can be installed via package manager eg.:
+To run tests locally the [GoogleTest](https://github.com/google/googletest) library is required. Under linux it can be installed via package manager eg.:
 
 ```sh
 apt-get install -y libgtest-dev

@@ -1,9 +1,9 @@
-FROM gcc:11.3.0
+FROM ubuntu:latest
 
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update && \
-    apt-get install -y libgtest-dev && \
+    apt-get install -y build-essential libgtest-dev && \
     rm -rf /var/lib/apt/lists/*
 
 COPY . .

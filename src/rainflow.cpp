@@ -1,8 +1,16 @@
 #include "rainflow.h"
+#include <deque>
 
-RainFlow::Reversals RainFlow::reversals( const RainFlow::Series& series )
+struct Reversal {
+    long unsigned int index;
+    double value;
+};
+
+typedef std::deque<Reversal> Reversals;
+
+static Reversals reversals( const RainFlow::Series& series )
 {
-    RainFlow::Reversals reversals;    
+    Reversals reversals;
 
     if( series.size() <= 2 )
         return reversals;
@@ -10,14 +18,14 @@ RainFlow::Reversals RainFlow::reversals( const RainFlow::Series& series )
     auto index { 0UL };
     auto x_last { series[0] };
     auto x { series[1] };
-    
-    reversals.push_back( { index, x_last } );    
+
+    reversals.push_back( { index, x_last } );
 
     auto d_last { x - x_last };
     auto x_next { x };
 
     while( ++index < series.size() - 1 ) {
-        x_next = series[index + 1];      
+        x_next = series[index + 1];
         if( x_next == x )
             continue;
 
@@ -27,7 +35,7 @@ RainFlow::Reversals RainFlow::reversals( const RainFlow::Series& series )
 
         x_last = x;
         x = x_next;
-        d_last = d_next;        
+        d_last = d_next;
     }
 
     if( series.size() > 2 )
@@ -39,13 +47,13 @@ RainFlow::Reversals RainFlow::reversals( const RainFlow::Series& series )
 RainFlow::Cycles RainFlow::extract_cycles( const RainFlow::Series& series )
 {
     RainFlow::Cycles cycles;
-    RainFlow::Reversals points;
+    Reversals points;
 
-    auto format_output = []( RainFlow::Reversals::iterator it, double count ) {
+    auto format_output = []( Reversals::iterator it, double count ) {
         auto i1 { it->index };
         auto x1 { it->value }; ++it;
         auto i2 { it->index };
-        auto x2 { it->value };        
+        auto x2 { it->value };
         auto rng { std::abs( x1 - x2 ) };
         auto mean { ( x1 + x2 ) / 2 };
         return RainFlow::Cycle { rng, mean, count, i1, i2 };
@@ -69,8 +77,8 @@ RainFlow::Cycles RainFlow::extract_cycles( const RainFlow::Series& series )
             }
             else if( points.size() == 3 ) {
                 // Y contains the starting point
-                // Count Y as one-half cycle and discard the first point                
-                cycles.push_back( format_output( points.begin(), 0.5 ) );                
+                // Count Y as one-half cycle and discard the first point
+                cycles.push_back( format_output( points.begin(), 0.5 ) );
                 points.pop_front();
             }
             else {
@@ -94,43 +102,39 @@ RainFlow::Cycles RainFlow::extract_cycles( const RainFlow::Series& series )
     return cycles;
 }
 
-RainFlow::Counts RainFlow::count_cycles( const RainFlow::Series& series, double binsize )
+RainFlow::Counts RainFlow::count_cycles( const RainFlow::Series& series, double binSize )
 {
-    RainFlow::CountsMap counts_map;
+    RainFlow::Counts counts;
 
-    if( ! std::isnan( binsize ) ) {
+    if( ! std::isnan( binSize ) ) {
         auto nmax { 0.0 };
 
         for( auto cycle : extract_cycles( series ) ) {
-            auto n { std::ceil( cycle.range / binsize ) };            
+            auto n { std::ceil( cycle.range / binSize ) };
             if( n > nmax )
                 nmax = n;
 
-            auto range { n * binsize };
-            if( counts_map.find( range ) == counts_map.end() )
-                counts_map[range] = cycle.count;
+            auto range { n * binSize };
+            if( counts.find( range ) == counts.end() )
+                counts[range] = cycle.count;
             else
-                counts_map[range] += cycle.count;            
-        }            
+                counts[range] += cycle.count;
+        }
 
         for( auto n = 1; n < nmax; ++n ) {
-            auto range { n * binsize };
-            if( counts_map.find( range ) == counts_map.end() )
-                counts_map[range] = 0.0;
+            auto range { n * binSize };
+            if( counts.find( range ) == counts.end() )
+                counts[range] = 0.0;
         }
     }
     else {
         for( auto cycle : extract_cycles( series ) ) {
-            if( counts_map.find( cycle.range ) == counts_map.end() )
-                counts_map[cycle.range] = cycle.count;
+            if( counts.find( cycle.range ) == counts.end() )
+                counts[cycle.range] = cycle.count;
             else
-                counts_map[cycle.range] += cycle.count; 
+                counts[cycle.range] += cycle.count;
         }
     }
-
-    RainFlow::Counts counts;
-    for( auto it = counts_map.begin(); it != counts_map.end(); ++it )
-        counts.push_back( { it->first, it->second } );
 
     return counts;
 }

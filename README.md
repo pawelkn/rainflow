@@ -11,15 +11,14 @@ The implementation consists of a single header `rainflow.h` and source file `rai
 Usage
 -----
 
-Function `RainFlow::count_cycles` returns a list of ranges and the corresponding number of cycles.
+Function `RainFlow::count_cycles` returns a map of ranges and the corresponding number of cycles.
 
 It takes two arguments:
 
 * `RainFlow::Series series` - an input vector of samples to process,
-* `double binsize` - (optional) specifies the width of each cycle-counting bin
+* `double binSize` - (optional) specifies the width of each cycle-counting bin
 
-Returns a `RainFlow::Counts` vector of `RainFlow::Count` structs.
-`RainFlow::Count` struct has two fields: `range` and `cycles`.
+Returns a `RainFlow::Counts` map.
 
 Example:
 
@@ -84,7 +83,7 @@ or locally:
 
 ```sh
 make
-build/example_rainflow example/samples.txt 
+build/example_rainflow example/samples.txt
 ```
 
 Running tests
@@ -97,7 +96,7 @@ docker build -t rainflow .
 docker run --rm rainflow make test
 ```
 
-or localy:
+or locally:
 
 ```sh
 make test

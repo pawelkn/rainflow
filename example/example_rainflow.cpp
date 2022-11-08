@@ -16,15 +16,15 @@ int main( int argc, char *argv[] )
         return 1;
     }
 
-    std::istream_iterator<double> start { is }, end;    
+    std::istream_iterator<double> start { is }, end;
     RainFlow::Series series { start, end };
-        
-    auto binsize { 10 };
-    auto counts { RainFlow::count_cycles( series, binsize ) };
 
-    std::cout << "counted cycles (binsize=" << binsize << "):" << std::endl;
+    auto binSize { 10 };
+    auto counts { RainFlow::count_cycles( series, binSize ) };
+
+    std::cout << "counted cycles (binSize=" << binSize << "):" << std::endl;
     for( auto count : counts )
-        std::cout << '(' << count.range << ", " << count.cycles << ')' << std::endl;
+        std::cout << '(' << count.first << ", " << count.second << ')' << std::endl;
 
     return 0;
 }

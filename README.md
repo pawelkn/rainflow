@@ -82,7 +82,8 @@ docker run --rm rainflow
 or locally:
 
 ```sh
-make
+cmake -S . -B build
+cmake --build build
 build/example_rainflow example/samples.txt
 ```
 
@@ -93,13 +94,15 @@ Build and run unit tests using `docker`:
 
 ```sh
 docker build -t rainflow .
-docker run --rm rainflow make test
+docker run --rm rainflow build/test_rainflow
 ```
 
 or locally:
 
 ```sh
-make test
+cmake -S . -B build
+cmake --build build
+build/test_rainflow
 ```
 
 To run tests locally the [GoogleTest](https://github.com/google/googletest) library is required. Under linux it can be installed via package manager eg.:

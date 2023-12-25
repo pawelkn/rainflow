@@ -28,7 +28,7 @@ Example:
 int main()
 {
     RainFlow::Series series { -2, 1, -3, 5, -1, 3, -4, 4, -2 };
-    auto counts { RainFlow::count_cycles( series, 2.0 ) };
+    auto counts = RainFlow::count_cycles( series, 2.0 );
     /* counts:
         { 2, 0.0 },
         { 4, 2.0 },
@@ -56,7 +56,7 @@ Example:
 int main()
 {
     RainFlow::Series series { -2, 1, -3, 5, -1, 3, -4, 4, -2 };
-    auto cycles { RainFlow::extract_cycles( series ) };
+    auto cycles = RainFlow::extract_cycles( series );
     /* cycles:
         { 3, -0.5, 0.5, 0, 1 },
         { 4, -1.0, 0.5, 1, 2 },

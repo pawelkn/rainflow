@@ -111,25 +111,16 @@ RainFlow::Counts RainFlow::count_cycles(const RainFlow::Series& series, double b
                 nmax = n;
 
             auto range = n * binSize;
-            if (counts.find(range) == counts.end()) {
-                counts[range] = cycle.count;
-            } else {
-                counts[range] += cycle.count;
-            }
+            counts[range] += cycle.count;
         }
 
         for (auto n = 1; n < nmax; ++n) {
             auto range = n * binSize;
-            if (counts.find(range) == counts.end())
-                counts[range] = 0.0;
+            counts.emplace(range, 0.0);
         }
     } else {
         for (auto cycle: extract_cycles(series)) {
-            if (counts.find(cycle.range) == counts.end()) {
-                counts[cycle.range] = cycle.count;
-            } else {
-                counts[cycle.range] += cycle.count;
-            }
+            counts[cycle.range] += cycle.count;
         }
     }
 

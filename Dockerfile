@@ -1,10 +1,9 @@
-FROM ubuntu:latest
+FROM alpine:3.19.0
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-RUN apt-get update; \
-    apt-get install -y --no-install-recommends make g++ libgtest-dev cmake; \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk add --no-cache build-base cmake gtest-dev
 
 COPY . .
 
